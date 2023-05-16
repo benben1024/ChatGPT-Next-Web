@@ -2,7 +2,10 @@ import styles from "./ui-lib.module.scss";
 import LoadingIcon from "../icons/three-dots.svg";
 import CloseIcon from "../icons/close.svg";
 import { createRoot } from "react-dom/client";
-import React from "react";
+import React, { HTMLProps, useState } from "react";
+import { IconButton } from "./button";
+import EyeIcon from "../icons/eye.svg";
+import EyeOffIcon from "../icons/eye-off.svg";
 
 export function Popover(props: {
   children: JSX.Element;
@@ -173,5 +176,28 @@ export function Input(props: InputProps) {
       {...props}
       className={`${styles["input"]} ${props.className}`}
     ></textarea>
+  );
+}
+
+export function PasswordInput(props: HTMLProps<HTMLInputElement>) {
+  const [visible, setVisible] = useState(false);
+
+  function changeVisibility() {
+    setVisible(!visible);
+  }
+
+  return (
+    <div className={"password-input-container"}>
+      <IconButton
+        icon={visible ? <EyeIcon /> : <EyeOffIcon />}
+        onClick={changeVisibility}
+        className={"password-eye"}
+      />
+      <input
+        {...props}
+        type={visible ? "text" : "password"}
+        className={"password-input"}
+      />
+    </div>
   );
 }

@@ -357,6 +357,8 @@ export function Settings(props: { closeSettings: () => void }) {
                 type="text"
                 placeholder={Locale.Settings.AccessCode.Placeholder}
                 onChange={(e) => {
+                  console.log(e.currentTarget.value);
+
                   accessStore.updateCode(e.currentTarget.value);
                 }}
               />

@@ -15,11 +15,13 @@ import BotIcon from "../icons/bot.svg";
 import AddIcon from "../icons/add.svg";
 import LoadingIcon from "../icons/three-dots.svg";
 import CloseIcon from "../icons/close.svg";
+import LoginIcon from "../icons/login.svg";
 
 import { useChatStore } from "../store";
 import { isMobileScreen } from "../utils";
 import Locale from "../locales";
 import { Chat } from "./chat";
+import LoginModal from "./login-model";
 
 import dynamic from "next/dynamic";
 import { REPO_URL } from "../constant";
@@ -153,6 +155,19 @@ function _Home() {
 
   useSwitchTheme();
 
+  const [loginVisible, setLoginVisible] = useState(false);
+  const handleLoginClick = () => {
+    setLoginVisible(true);
+  };
+
+  const handleLoginCancel = () => {
+    setLoginVisible(false);
+  };
+
+  const onLoginSuccess = () => {
+    // console.log("登录成功");
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -211,6 +226,15 @@ function _Home() {
                 <IconButton icon={<GithubIcon />} shadow />
               </a>
             </div>
+            <div className={styles["sidebar-action"]}>
+              <IconButton
+                icon={<LoginIcon />}
+                onClick={() => {
+                  handleLoginClick();
+                }}
+                shadow
+              />
+            </div>
           </div>
           <div>
             <IconButton
@@ -247,6 +271,12 @@ function _Home() {
           />
         )}
       </div>
+
+      <LoginModal
+        visible={loginVisible}
+        onCancel={handleLoginCancel}
+        onLoginSuccess={onLoginSuccess}
+      />
     </div>
   );
 }
