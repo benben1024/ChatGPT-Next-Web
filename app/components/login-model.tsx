@@ -27,7 +27,6 @@ const LoginModal: React.FC<LoginModalProps> = ({
     setLoading(true);
     try {
       const accessCode = `${form.username}+${form.password}`;
-      accessStore.updateCode(accessCode);
 
       const res = await fetch("/api/auth", {
         method: "POST",
@@ -40,6 +39,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
       const response = await res.json();
 
       if (response.isAccessCodeAuthorized) {
+        accessStore.updateCode(accessCode);
         setUsername(form.username);
         setPassword(form.password);
         onLoginSuccess && onLoginSuccess();
